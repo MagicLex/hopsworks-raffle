@@ -46,23 +46,14 @@ export default function Home() {
   return (
     <div className="min-h-screen flex items-center justify-center p-6">
       <div className="w-full max-w-md">
-        {/* Header */}
-        <div className="mb-6">
-          <img
-            src="/logo.svg"
-            alt="Hopsworks"
-            className="h-8"
-          />
-        </div>
-
-        {/* Book Cover + QR */}
+        {/* QR + Book */}
         <div className="mb-6 flex flex-col gap-4 items-center">
+          <img src="/qr.png" alt="QR Code" className="w-48" />
           <img
             src="https://cdn.prod.website-files.com/5f6353590bb01cacbcecfbac/6913334f3a2eda409ff69e75_Book%20final%20visual.png"
             alt="Building Machine Learning Systems"
-            className="w-full"
+            className="w-64"
           />
-          <img src="/qr.png" alt="QR Code" className="w-48" />
         </div>
 
         <h1 className="text-xl font-bold text-gray-900 mb-6">Enter the Raffle</h1>
