@@ -55,13 +55,14 @@ export default function Home() {
           />
         </div>
 
-        {/* Book Cover */}
-        <div className="mb-6">
+        {/* Book Cover + QR */}
+        <div className="mb-6 flex gap-4 items-center">
           <img
             src="https://cdn.prod.website-files.com/5f6353590bb01cacbcecfbac/6913334f3a2eda409ff69e75_Book%20final%20visual.png"
             alt="Building Machine Learning Systems"
-            className="w-full"
+            className="flex-1"
           />
+          <img src="/qr.png" alt="QR Code" className="w-28" />
         </div>
 
         <h1 className="text-xl font-bold text-gray-900 mb-6">Enter the Raffle</h1>
@@ -87,10 +88,6 @@ export default function Home() {
               Keep this number handy for the draw.
             </p>
 
-            {/* QR Code */}
-            <div className="border-t border-gray-200 pt-6">
-              <img src="/qr.png" alt="QR Code" className="w-40 mx-auto" />
-            </div>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="bg-white rounded-sm border border-gray-300 p-8">
@@ -138,10 +135,6 @@ export default function Home() {
               {loading ? "Registering..." : "Get My Ticket"}
             </button>
 
-            {/* QR Code */}
-            <div className="mt-8 pt-6 border-t border-gray-200">
-              <img src="/qr.png" alt="QR Code" className="w-40 mx-auto" />
-            </div>
           </form>
         )}
       </div>
