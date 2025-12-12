@@ -47,32 +47,24 @@ export default function Home() {
     <div className="min-h-screen flex items-center justify-center p-6">
       <div className="w-full max-w-md">
         {/* Header */}
-        <div className="mb-8">
-          <div className="mb-6">
-            <img
-              src="/logo.svg"
-              alt="Hopsworks"
-              className="h-8"
-            />
-          </div>
-
-          {/* Book Cover */}
-          <div className="mb-6">
-            <img
-              src="https://cdn.prod.website-files.com/5f6353590bb01cacbcecfbac/6913334f3a2eda409ff69e75_Book%20final%20visual.png"
-              alt="Building Machine Learning Systems"
-              className="w-full"
-            />
-          </div>
-
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Book Raffle</h1>
-          <p className="text-sm text-gray-500 mb-1">
-            Win a copy of <span className="font-semibold">Building Machine Learning Systems</span>
-          </p>
-          <p className="text-xs text-gray-400">
-            Batch, Real-Time, and LLM Systems — by Jim Dowling
-          </p>
+        <div className="mb-6">
+          <img
+            src="/logo.svg"
+            alt="Hopsworks"
+            className="h-8"
+          />
         </div>
+
+        {/* Book Cover */}
+        <div className="mb-6">
+          <img
+            src="https://cdn.prod.website-files.com/5f6353590bb01cacbcecfbac/6913334f3a2eda409ff69e75_Book%20final%20visual.png"
+            alt="Building Machine Learning Systems"
+            className="w-full"
+          />
+        </div>
+
+        <h1 className="text-xl font-bold text-gray-900 mb-6">Enter the Raffle</h1>
 
         {ticketNumber !== null ? (
           <div className="bg-white rounded-sm border border-gray-300 p-8">
