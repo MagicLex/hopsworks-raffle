@@ -15,8 +15,10 @@ export default function DrawPage() {
   const [loading, setLoading] = useState(true);
   const [spinning, setSpinning] = useState(false);
   const [displayNumber, setDisplayNumber] = useState<number | null>(null);
-  const [winner, setWinner] = useState<Participant | null>(null);
+  const [winners, setWinners] = useState<Participant[]>([]);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [winnerCount, setWinnerCount] = useState(1);
+  const [currentDrawIndex, setCurrentDrawIndex] = useState(0);
 
   const fetchParticipants = useCallback(async () => {
     try {
@@ -36,10 +38,14 @@ export default function DrawPage() {
     fetchParticipants();
   }, [fetchParticipants]);
 
-  const startDraw = () => {
-    if (participants.length === 0) return;
+  const getEligibleParticipants = () => {
+    return participants.filter(p => !winners.some(w => w.number === p.number));
+  };
 
-    setWinner(null);
+  const startDraw = () => {
+    const eligible = getEligibleParticipants();
+    if (eligible.length === 0) return;
+
     setSpinning(true);
     setShowConfetti(false);
 
@@ -49,28 +55,29 @@ export default function DrawPage() {
 
     const interval = setInterval(() => {
       elapsed += intervalTime;
-      const randomIndex = Math.floor(Math.random() * participants.length);
-      setDisplayNumber(participants[randomIndex].number);
+      const randomIndex = Math.floor(Math.random() * eligible.length);
+      setDisplayNumber(eligible[randomIndex].number);
 
       if (elapsed > duration * 0.75) {
         clearInterval(interval);
-        slowDown();
+        slowDown(eligible);
       }
     }, intervalTime);
 
-    const slowDown = () => {
+    const slowDown = (pool: Participant[]) => {
       let slowIntervalTime = 100;
       const slowInterval = setInterval(() => {
         slowIntervalTime += 60;
-        const randomIndex = Math.floor(Math.random() * participants.length);
-        setDisplayNumber(participants[randomIndex].number);
+        const randomIndex = Math.floor(Math.random() * pool.length);
+        setDisplayNumber(pool[randomIndex].number);
 
         if (slowIntervalTime > 450) {
           clearInterval(slowInterval);
-          const winnerIndex = Math.floor(Math.random() * participants.length);
-          const selectedWinner = participants[winnerIndex];
+          const winnerIndex = Math.floor(Math.random() * pool.length);
+          const selectedWinner = pool[winnerIndex];
           setDisplayNumber(selectedWinner.number);
-          setWinner(selectedWinner);
+          setWinners(prev => [...prev, selectedWinner]);
+          setCurrentDrawIndex(prev => prev + 1);
           setSpinning(false);
           setShowConfetti(true);
         }
@@ -79,10 +86,14 @@ export default function DrawPage() {
   };
 
   const resetDraw = () => {
-    setWinner(null);
+    setWinners([]);
     setDisplayNumber(null);
     setShowConfetti(false);
+    setCurrentDrawIndex(0);
   };
+
+  const hasMoreDraws = currentDrawIndex < winnerCount && getEligibleParticipants().length > 0;
+  const allDrawsComplete = winners.length >= winnerCount || getEligibleParticipants().length === 0;
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-6 relative overflow-hidden">
@@ -133,15 +144,31 @@ export default function DrawPage() {
             <div className="text-center text-base text-gray-500 py-12">No participants yet</div>
           ) : (
             <>
+              {/* Winner Count Selector */}
+              {winners.length === 0 && !spinning && (
+                <div className="mb-8 flex items-center justify-center gap-4">
+                  <label className="text-sm font-bold text-gray-900">Number of winners:</label>
+                  <select
+                    value={winnerCount}
+                    onChange={(e) => setWinnerCount(Number(e.target.value))}
+                    className="px-4 py-2 border border-gray-300 rounded-sm text-base focus:outline-none focus:border-primary"
+                  >
+                    {[1, 2, 3, 4, 5].map(n => (
+                      <option key={n} value={n}>{n}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
               {/* Number Display */}
               <div
                 className={`rounded-sm p-12 mb-8 text-center transition-all ${
-                  winner ? "winner-animation bg-primary-lightest" : "bg-gray-100"
+                  winners.length > 0 && !spinning ? "winner-animation bg-primary-lightest" : "bg-gray-100"
                 } ${spinning ? "scale-[1.02]" : ""}`}
               >
                 <span
                   className={`text-7xl font-mono font-bold transition-colors ${
-                    winner ? "text-primary" : "text-gray-900"
+                    winners.length > 0 && !spinning ? "text-primary" : "text-gray-900"
                   }`}
                 >
                   {displayNumber !== null
@@ -150,17 +177,25 @@ export default function DrawPage() {
                 </span>
               </div>
 
-              {/* Winner Name */}
-              {winner && (
+              {/* Winners List */}
+              {winners.length > 0 && (
                 <div className="text-center mb-8">
-                  <p className="text-base font-bold text-primary mb-2">Winner</p>
-                  <p className="text-2xl font-bold text-gray-900">{winner.name}</p>
+                  <p className="text-base font-bold text-primary mb-4">
+                    {winners.length === 1 ? "Winner" : `Winners (${winners.length}/${winnerCount})`}
+                  </p>
+                  <div className="space-y-2">
+                    {winners.map((w, i) => (
+                      <p key={w.number} className="text-xl font-bold text-gray-900">
+                        #{String(w.number).padStart(3, "0")} — {w.name}
+                      </p>
+                    ))}
+                  </div>
                 </div>
               )}
 
               {/* Actions */}
               <div className="flex justify-center gap-4">
-                {!spinning && !winner && (
+                {!spinning && winners.length === 0 && (
                   <button
                     onClick={startDraw}
                     className="bg-primary text-white font-bold text-base py-3 px-10 rounded-sm border border-primary hover:bg-primary-hover hover:border-primary-hover transition-all"
@@ -169,12 +204,21 @@ export default function DrawPage() {
                   </button>
                 )}
 
-                {winner && (
+                {!spinning && hasMoreDraws && winners.length > 0 && (
+                  <button
+                    onClick={startDraw}
+                    className="bg-primary text-white font-bold text-base py-3 px-10 rounded-sm border border-primary hover:bg-primary-hover hover:border-primary-hover transition-all"
+                  >
+                    Draw Next Winner ({currentDrawIndex + 1}/{winnerCount})
+                  </button>
+                )}
+
+                {!spinning && allDrawsComplete && winners.length > 0 && (
                   <button
                     onClick={resetDraw}
                     className="bg-white text-primary font-bold text-base py-3 px-10 rounded-sm border-2 border-primary hover:bg-primary-lightest transition-all"
                   >
-                    Draw Again
+                    Reset
                   </button>
                 )}
 
@@ -202,7 +246,7 @@ export default function DrawPage() {
                   <div
                     key={p.number}
                     className={`text-sm p-3 rounded-sm transition-colors ${
-                      winner?.number === p.number
+                      winners.some(w => w.number === p.number)
                         ? "bg-primary text-white font-bold"
                         : "bg-gray-100 text-gray-900"
                     }`}

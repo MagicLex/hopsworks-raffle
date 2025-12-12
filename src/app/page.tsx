@@ -83,9 +83,15 @@ export default function Home() {
                 #{String(ticketNumber).padStart(3, "0")}
               </span>
             </div>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-gray-500 mb-6">
               Keep this number handy for the draw.
             </p>
+
+            {/* QR Code */}
+            <div className="border-t border-gray-200 pt-6">
+              <p className="text-xs text-gray-400 text-center mb-3">Share with friends</p>
+              <img src="/qr.png" alt="QR Code" className="w-32 mx-auto" />
+            </div>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="bg-white rounded-sm border border-gray-300 p-8">
