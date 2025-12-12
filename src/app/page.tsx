@@ -46,14 +46,20 @@ export default function Home() {
   return (
     <div className="min-h-screen flex items-center justify-center p-6">
       <div className="w-full max-w-md">
-        {/* QR + Book */}
-        <div className="mb-6 flex flex-col gap-4 items-center">
-          <img src="/qr.png" alt="QR Code" className="w-48" />
-          <img
-            src="https://cdn.prod.website-files.com/5f6353590bb01cacbcecfbac/6913334f3a2eda409ff69e75_Book%20final%20visual.png"
-            alt="Building Machine Learning Systems"
-            className="w-64"
-          />
+        {/* Book + QR Card */}
+        <div className="mb-8 bg-white rounded-sm border border-gray-300 p-6">
+          <div className="flex gap-6 items-center">
+            <img
+              src="https://cdn.prod.website-files.com/5f6353590bb01cacbcecfbac/6913334f3a2eda409ff69e75_Book%20final%20visual.png"
+              alt="Building Machine Learning Systems"
+              className="w-44 flex-shrink-0"
+            />
+            <div className="flex flex-col items-center gap-3">
+              <p className="text-xs text-gray-500 font-bold uppercase tracking-wide">Scan to enter</p>
+              <img src="/qr.png" alt="QR Code" className="w-32" />
+              <p className="text-xs text-gray-400">Win this book!</p>
+            </div>
+          </div>
         </div>
 
         <h1 className="text-xl font-bold text-gray-900 mb-6">Enter the Raffle</h1>
