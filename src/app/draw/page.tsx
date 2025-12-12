@@ -123,7 +123,7 @@ export default function DrawPage() {
         </div>
 
         {/* Draw Display */}
-        <div className="bg-white rounded-lg border border-gray-300 p-10 mb-8">
+        <div className="bg-white rounded-sm border border-gray-300 p-10 mb-8">
           {loading ? (
             <div className="text-center text-base text-gray-500 py-12">Loading participants...</div>
           ) : participants.length === 0 ? (
@@ -132,7 +132,7 @@ export default function DrawPage() {
             <>
               {/* Number Display */}
               <div
-                className={`rounded-lg p-12 mb-8 text-center transition-all ${
+                className={`rounded-sm p-12 mb-8 text-center transition-all ${
                   winner ? "winner-animation bg-primary-lightest" : "bg-gray-100"
                 } ${spinning ? "scale-[1.02]" : ""}`}
               >
@@ -160,7 +160,7 @@ export default function DrawPage() {
                 {!spinning && !winner && (
                   <button
                     onClick={startDraw}
-                    className="bg-primary text-white font-bold text-base py-3 px-10 rounded-lg border border-primary hover:bg-primary-hover hover:border-primary-hover transition-all"
+                    className="bg-primary text-white font-bold text-base py-3 px-10 rounded-sm border border-primary hover:bg-primary-hover hover:border-primary-hover transition-all"
                   >
                     Start Draw
                   </button>
@@ -169,7 +169,7 @@ export default function DrawPage() {
                 {winner && (
                   <button
                     onClick={resetDraw}
-                    className="bg-white text-primary font-bold text-base py-3 px-10 rounded-lg border-2 border-primary hover:bg-primary-lightest transition-all"
+                    className="bg-white text-primary font-bold text-base py-3 px-10 rounded-sm border-2 border-primary hover:bg-primary-lightest transition-all"
                   >
                     Draw Again
                   </button>
@@ -186,7 +186,7 @@ export default function DrawPage() {
         </div>
 
         {/* Participants List */}
-        <div className="bg-white rounded-lg border border-gray-300 overflow-hidden">
+        <div className="bg-white rounded-sm border border-gray-300 overflow-hidden">
           <div className="px-6 py-4 border-b border-gray-200 bg-gray-100">
             <h2 className="text-base font-bold text-gray-900">Participants</h2>
           </div>
@@ -198,7 +198,7 @@ export default function DrawPage() {
                 {participants.map((p) => (
                   <div
                     key={p.number}
-                    className={`text-sm p-3 rounded-lg transition-colors ${
+                    className={`text-sm p-3 rounded-sm transition-colors ${
                       winner?.number === p.number
                         ? "bg-primary text-white font-bold"
                         : "bg-gray-100 text-gray-900"

@@ -62,7 +62,7 @@ export default function Home() {
         </div>
 
         {ticketNumber !== null ? (
-          <div className="bg-white rounded-lg border border-gray-300 p-8">
+          <div className="bg-white rounded-sm border border-gray-300 p-8">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
                 <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -73,7 +73,7 @@ export default function Home() {
             </div>
 
             <p className="text-base text-gray-500 mb-4">Your ticket number:</p>
-            <div className="bg-primary-lightest rounded-lg p-6 mb-6">
+            <div className="bg-primary-lightest rounded-sm p-6 mb-6">
               <span className="text-5xl font-mono font-bold text-primary">
                 #{String(ticketNumber).padStart(3, "0")}
               </span>
@@ -83,7 +83,7 @@ export default function Home() {
             </p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="bg-white rounded-lg border border-gray-300 p-8">
+          <form onSubmit={handleSubmit} className="bg-white rounded-sm border border-gray-300 p-8">
             <div className="mb-6">
               <label htmlFor="name" className="block text-sm font-bold text-gray-900 mb-2">
                 Full Name
@@ -94,7 +94,7 @@ export default function Home() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Jean Dupont"
-                className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors"
+                className="w-full px-4 py-3 text-base border border-gray-300 rounded-sm focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors"
                 required
               />
             </div>
@@ -109,13 +109,13 @@ export default function Home() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="jean@example.com"
-                className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors"
+                className="w-full px-4 py-3 text-base border border-gray-300 rounded-sm focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors"
                 required
               />
             </div>
 
             {error && (
-              <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-error text-sm">
+              <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-sm text-error text-sm">
                 {error}
               </div>
             )}
@@ -123,7 +123,7 @@ export default function Home() {
             <button
               type="submit"
               disabled={loading || !name.trim() || !email.trim()}
-              className="w-full bg-primary text-white font-bold text-base py-3 px-6 rounded-lg border border-primary hover:bg-primary-hover hover:border-primary-hover transition-all disabled:bg-gray-400 disabled:border-gray-400 disabled:cursor-not-allowed"
+              className="w-full bg-primary text-white font-bold text-base py-3 px-6 rounded-sm border border-primary hover:bg-primary-hover hover:border-primary-hover transition-all disabled:bg-gray-400 disabled:border-gray-400 disabled:cursor-not-allowed"
             >
               {loading ? "Registering..." : "Get My Ticket"}
             </button>
