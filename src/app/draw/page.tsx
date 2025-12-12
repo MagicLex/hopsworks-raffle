@@ -111,7 +111,7 @@ export default function DrawPage() {
         <div className="text-center mb-10">
           <div className="flex justify-center mb-4">
             <img
-              src="https://cdn.prod.website-files.com/5f6353590bb01cacbcecfbac/6202a13e7cafec5553703f6b_logo.svg"
+              src="/logo.svg"
               alt="Hopsworks"
               className="h-10"
             />
