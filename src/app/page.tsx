@@ -62,7 +62,7 @@ export default function Home() {
             alt="Building Machine Learning Systems"
             className="w-full"
           />
-          <img src="/qr.png" alt="QR Code" className="w-32" />
+          <img src="/qr.png" alt="QR Code" className="w-48" />
         </div>
 
         <h1 className="text-xl font-bold text-gray-900 mb-6">Enter the Raffle</h1>
