@@ -43,9 +43,8 @@ export default function DrawPage() {
     setSpinning(true);
     setShowConfetti(false);
 
-    // Random number cycling animation
-    const duration = 4000;
-    const intervalTime = 50;
+    const duration = 3500;
+    const intervalTime = 60;
     let elapsed = 0;
 
     const interval = setInterval(() => {
@@ -53,8 +52,7 @@ export default function DrawPage() {
       const randomIndex = Math.floor(Math.random() * participants.length);
       setDisplayNumber(participants[randomIndex].number);
 
-      // Slow down towards the end
-      if (elapsed > duration * 0.8) {
+      if (elapsed > duration * 0.75) {
         clearInterval(interval);
         slowDown();
       }
@@ -63,13 +61,12 @@ export default function DrawPage() {
     const slowDown = () => {
       let slowIntervalTime = 100;
       const slowInterval = setInterval(() => {
-        slowIntervalTime += 50;
+        slowIntervalTime += 60;
         const randomIndex = Math.floor(Math.random() * participants.length);
         setDisplayNumber(participants[randomIndex].number);
 
-        if (slowIntervalTime > 500) {
+        if (slowIntervalTime > 450) {
           clearInterval(slowInterval);
-          // Final selection
           const winnerIndex = Math.floor(Math.random() * participants.length);
           const selectedWinner = participants[winnerIndex];
           setDisplayNumber(selectedWinner.number);
@@ -91,77 +88,79 @@ export default function DrawPage() {
     <div className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden">
       {/* Confetti */}
       {showConfetti && (
-        <div className="fixed inset-0 pointer-events-none">
-          {Array.from({ length: 50 }).map((_, i) => (
+        <div className="fixed inset-0 pointer-events-none z-50">
+          {Array.from({ length: 40 }).map((_, i) => (
             <div
               key={i}
-              className="confetti-piece absolute w-3 h-3 rounded-sm"
+              className="confetti absolute w-2 h-2"
               style={{
                 left: `${Math.random() * 100}%`,
-                top: `-20px`,
-                backgroundColor: ["#1EB182", "#65D3AF", "#FFD700", "#FF6B6B", "#4ECDC4"][
+                top: `-10px`,
+                backgroundColor: ["#1eb182", "#65D3AF", "#FFD700", "#EB5757", "#9B51E0"][
                   Math.floor(Math.random() * 5)
                 ],
-                animationDelay: `${Math.random() * 2}s`,
-                transform: `rotate(${Math.random() * 360}deg)`,
+                animationDelay: `${Math.random() * 1.5}s`,
               }}
             />
           ))}
         </div>
       )}
 
-      <div className="w-full max-w-2xl text-center">
+      <div className="w-full max-w-xl">
         {/* Header */}
-        <div className="mb-12">
-          <div className="inline-flex items-center gap-2 mb-4">
-            <svg width="48" height="48" viewBox="0 0 40 40" fill="none">
-              <rect width="40" height="40" rx="8" fill="#1EB182"/>
-              <path d="M12 20h16M20 12v16" stroke="white" strokeWidth="3" strokeLinecap="round"/>
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center gap-2 mb-3">
+            <svg width="32" height="32" viewBox="0 0 28 28" fill="none">
+              <rect width="28" height="28" rx="4" fill="#1eb182"/>
+              <path d="M8 14h12M14 8v12" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
             </svg>
-            <span className="text-3xl font-bold text-gray-dark">Hopsworks</span>
+            <span className="text-xl font-bold text-black">Hopsworks</span>
           </div>
-          <h1 className="text-4xl font-bold text-gray-dark mb-2">Book Raffle Draw</h1>
-          <p className="text-gray-medium text-lg">
-            {participants.length} participants registered
+          <h1 className="text-2xl font-bold text-black mb-1">Book Raffle Draw</h1>
+          <p className="text-sm text-gray">
+            {participants.length} participant{participants.length !== 1 ? "s" : ""} registered
           </p>
         </div>
 
         {/* Draw Display */}
-        <div className="bg-white rounded-2xl border border-gray-light p-12 mb-8 shadow-lg">
+        <div className="bg-white rounded-sm border border-gray-lighter p-6 mb-6">
           {loading ? (
-            <div className="text-gray-medium">Loading participants...</div>
+            <div className="text-center text-sm text-gray py-8">Loading participants...</div>
           ) : participants.length === 0 ? (
-            <div className="text-gray-medium">No participants yet</div>
+            <div className="text-center text-sm text-gray py-8">No participants yet</div>
           ) : (
             <>
+              {/* Number Display */}
               <div
-                className={`bg-hops-lightest rounded-xl p-8 mb-8 transition-all ${
-                  spinning ? "scale-105" : ""
-                } ${winner ? "winner-animation" : ""}`}
+                className={`bg-gray-lightest rounded-sm p-8 mb-6 text-center transition-transform ${
+                  spinning ? "scale-[1.02]" : ""
+                } ${winner ? "winner-animation bg-primary-lightest" : ""}`}
               >
                 <span
-                  className={`text-8xl font-mono font-bold ${
-                    winner ? "text-hops" : "text-gray-dark"
+                  className={`text-6xl font-mono font-bold transition-colors ${
+                    winner ? "text-primary" : "text-black"
                   }`}
                 >
                   {displayNumber !== null
                     ? `#${String(displayNumber).padStart(3, "0")}`
-                    : "???"}
+                    : "# ???"}
                 </span>
               </div>
 
+              {/* Winner Name */}
               {winner && (
-                <div className="mb-8 animate-fade-in">
-                  <p className="text-2xl font-bold text-hops mb-2">Winner!</p>
-                  <p className="text-3xl font-bold text-gray-dark">{winner.name}</p>
+                <div className="text-center mb-6">
+                  <p className="text-sm font-bold text-primary mb-1">Winner</p>
+                  <p className="text-xl font-bold text-black">{winner.name}</p>
                 </div>
               )}
 
-              <div className="flex gap-4 justify-center">
+              {/* Actions */}
+              <div className="flex justify-center gap-3">
                 {!spinning && !winner && (
                   <button
                     onClick={startDraw}
-                    className="bg-hops text-white font-bold text-xl py-4 px-12 rounded-xl hover:bg-hops-light transition-all transform hover:scale-105"
+                    className="bg-primary text-white font-bold text-sm py-2 px-6 rounded-sm border border-primary hover:bg-primary-hover hover:border-primary-hover transition-all"
                   >
                     Start Draw
                   </button>
@@ -170,16 +169,16 @@ export default function DrawPage() {
                 {winner && (
                   <button
                     onClick={resetDraw}
-                    className="bg-white text-hops font-bold text-xl py-4 px-12 rounded-xl border-2 border-hops hover:bg-hops-lightest transition-all"
+                    className="bg-white text-primary font-bold text-sm py-2 px-6 rounded-sm border border-primary hover:bg-primary-lightest transition-all"
                   >
                     Draw Again
                   </button>
                 )}
 
                 {spinning && (
-                  <div className="text-2xl font-bold text-gray-medium animate-pulse">
+                  <span className="text-sm font-bold text-gray animate-pulse py-2">
                     Drawing...
-                  </div>
+                  </span>
                 )}
               </div>
             </>
@@ -187,33 +186,39 @@ export default function DrawPage() {
         </div>
 
         {/* Participants List */}
-        <div className="bg-white rounded-lg border border-gray-light p-6">
-          <h2 className="text-lg font-bold text-gray-dark mb-4">Participants</h2>
-          <div className="max-h-48 overflow-y-auto">
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-              {participants.map((p) => (
-                <div
-                  key={p.number}
-                  className={`text-sm p-2 rounded ${
-                    winner?.number === p.number
-                      ? "bg-hops text-white font-bold"
-                      : "bg-gray-lightest text-gray-dark"
-                  }`}
-                >
-                  <span className="font-mono">#{String(p.number).padStart(3, "0")}</span>{" "}
-                  {p.name}
-                </div>
-              ))}
-            </div>
+        <div className="bg-white rounded-sm border border-gray-lighter">
+          <div className="px-5 py-3 border-b border-gray-lighter">
+            <h2 className="text-sm font-bold text-black">Participants</h2>
+          </div>
+          <div className="p-5 max-h-48 overflow-y-auto">
+            {participants.length === 0 ? (
+              <p className="text-sm text-gray">No participants yet</p>
+            ) : (
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                {participants.map((p) => (
+                  <div
+                    key={p.number}
+                    className={`text-xs p-2 rounded-sm transition-colors ${
+                      winner?.number === p.number
+                        ? "bg-primary text-white font-bold"
+                        : "bg-gray-lightest text-black"
+                    }`}
+                  >
+                    <span className="font-mono">#{String(p.number).padStart(3, "0")}</span>{" "}
+                    <span className="truncate">{p.name}</span>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Refresh Button */}
+        {/* Refresh */}
         <button
           onClick={fetchParticipants}
-          className="mt-4 text-sm text-gray-medium hover:text-hops transition-colors"
+          className="w-full mt-3 text-xs text-gray hover:text-primary transition-colors"
         >
-          Refresh participants
+          ↻ Refresh participants
         </button>
       </div>
     </div>

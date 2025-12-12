@@ -19,7 +19,7 @@ export default function Home() {
     setError("");
 
     try {
-      const response = await fetch(SCRIPT_URL, {
+      await fetch(SCRIPT_URL, {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "application/json" },
@@ -46,46 +46,49 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 mb-4">
-            <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-              <rect width="40" height="40" rx="8" fill="#1EB182"/>
-              <path d="M12 20h16M20 12v16" stroke="white" strokeWidth="3" strokeLinecap="round"/>
+      <div className="w-full max-w-sm">
+        {/* Header */}
+        <div className="mb-6">
+          <div className="flex items-center gap-2 mb-3">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <rect width="28" height="28" rx="4" fill="#1eb182"/>
+              <path d="M8 14h12M14 8v12" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
             </svg>
-            <span className="text-2xl font-bold text-gray-dark">Hopsworks</span>
+            <span className="text-lg font-bold text-black">Hopsworks</span>
           </div>
-          <h1 className="text-3xl font-bold text-gray-dark mb-2">Book Raffle</h1>
-          <p className="text-gray-medium">
-            Enter for a chance to win the O&apos;Reilly MLOps book!
+          <h1 className="text-2xl font-bold text-black mb-1">Book Raffle</h1>
+          <p className="text-sm text-gray">
+            Enter for a chance to win the O&apos;Reilly MLOps book
           </p>
         </div>
 
         {ticketNumber !== null ? (
           /* Success State */
-          <div className="bg-white rounded-lg border border-gray-light p-8 text-center">
-            <div className="w-16 h-16 bg-hops-lightest rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="w-8 h-8 text-hops" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
+          <div className="bg-white rounded-sm border border-gray-lighter p-5">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-5 h-5 bg-primary rounded-full flex items-center justify-center">
+                <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <span className="text-sm font-bold text-black">You&apos;re in!</span>
             </div>
-            <h2 className="text-xl font-bold text-gray-dark mb-2">You&apos;re in!</h2>
-            <p className="text-gray-medium mb-6">Your ticket number is:</p>
-            <div className="bg-hops-lightest rounded-lg p-6 mb-6">
-              <span className="text-5xl font-mono font-bold text-hops">
+
+            <p className="text-sm text-gray mb-3">Your ticket number:</p>
+            <div className="bg-primary-lightest rounded-sm p-4 mb-4">
+              <span className="text-3xl font-mono font-bold text-primary">
                 #{String(ticketNumber).padStart(3, "0")}
               </span>
             </div>
-            <p className="text-sm text-gray-medium">
-              Keep this number handy for the draw!
+            <p className="text-xs text-gray">
+              Keep this number handy for the draw.
             </p>
           </div>
         ) : (
           /* Registration Form */
-          <form onSubmit={handleSubmit} className="bg-white rounded-lg border border-gray-light p-8">
+          <form onSubmit={handleSubmit} className="bg-white rounded-sm border border-gray-lighter p-5">
             <div className="mb-4">
-              <label htmlFor="name" className="block text-sm font-semibold text-gray-dark mb-2">
+              <label htmlFor="name" className="block text-sm font-bold text-black mb-1">
                 Full Name
               </label>
               <input
@@ -94,12 +97,13 @@ export default function Home() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Jean Dupont"
-                className="w-full px-4 py-3 border border-gray-light rounded-lg focus:outline-none focus:border-hops transition-colors"
+                className="w-full px-3 py-2 text-sm border border-gray-lighter rounded-sm focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors"
                 required
               />
             </div>
-            <div className="mb-6">
-              <label htmlFor="email" className="block text-sm font-semibold text-gray-dark mb-2">
+
+            <div className="mb-5">
+              <label htmlFor="email" className="block text-sm font-bold text-black mb-1">
                 Email
               </label>
               <input
@@ -108,13 +112,13 @@ export default function Home() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="jean@example.com"
-                className="w-full px-4 py-3 border border-gray-light rounded-lg focus:outline-none focus:border-hops transition-colors"
+                className="w-full px-3 py-2 text-sm border border-gray-lighter rounded-sm focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors"
                 required
               />
             </div>
 
             {error && (
-              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
+              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-sm text-error text-sm">
                 {error}
               </div>
             )}
@@ -122,7 +126,7 @@ export default function Home() {
             <button
               type="submit"
               disabled={loading || !name.trim() || !email.trim()}
-              className="w-full bg-hops text-white font-semibold py-3 px-6 rounded-lg hover:bg-hops-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-primary text-white font-bold text-sm py-2 px-4 rounded-sm border border-primary hover:bg-primary-hover hover:border-primary-hover transition-all disabled:bg-gray-light disabled:border-gray-light disabled:cursor-not-allowed"
             >
               {loading ? "Registering..." : "Get My Ticket"}
             </button>
