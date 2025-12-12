@@ -61,7 +61,7 @@ export default function Home() {
             <img
               src="https://cdn.prod.website-files.com/5f6353590bb01cacbcecfbac/6913334f3a2eda409ff69e75_Book%20final%20visual.png"
               alt="Building Machine Learning Systems"
-              className="w-full max-w-[280px] mx-auto rounded-sm shadow-md"
+              className="w-full"
             />
           </div>
 
