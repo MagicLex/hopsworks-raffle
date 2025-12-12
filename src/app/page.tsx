@@ -89,7 +89,7 @@ export default function Home() {
 
             {/* QR Code */}
             <div className="border-t border-gray-200 pt-6">
-              <img src="/qr.png" alt="QR Code" className="w-28 mx-auto" />
+              <img src="/qr.png" alt="QR Code" className="w-40 mx-auto" />
             </div>
           </div>
         ) : (
@@ -140,7 +140,7 @@ export default function Home() {
 
             {/* QR Code */}
             <div className="mt-8 pt-6 border-t border-gray-200">
-              <img src="/qr.png" alt="QR Code" className="w-28 mx-auto" />
+              <img src="/qr.png" alt="QR Code" className="w-40 mx-auto" />
             </div>
           </form>
         )}
