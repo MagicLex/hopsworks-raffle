@@ -109,11 +109,11 @@ export default function DrawPage() {
       <div className="w-full max-w-2xl">
         {/* Header */}
         <div className="text-center mb-10">
-          <div className="flex justify-center mb-4">
+          <div className="flex justify-center mb-6">
             <img
               src="/logo.svg"
               alt="Hopsworks"
-              className="h-10"
+              className="h-16"
             />
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Book Raffle Draw</h1>
