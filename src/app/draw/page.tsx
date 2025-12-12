@@ -109,14 +109,17 @@ export default function DrawPage() {
       <div className="w-full max-w-2xl">
         {/* Header */}
         <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-3 mb-4">
-            <svg width="40" height="40" viewBox="0 0 36 36" fill="none">
-              <rect width="36" height="36" rx="6" fill="#1eb182"/>
-              <path d="M10 18h16M18 10v16" stroke="white" strokeWidth="3" strokeLinecap="round"/>
-            </svg>
-            <span className="text-2xl font-bold text-gray-900">Hopsworks</span>
+          <div className="flex justify-center mb-4">
+            <img
+              src="https://cdn.prod.website-files.com/5f6353590bb01cacbcecfbac/6202a13e7cafec5553703f6b_logo.svg"
+              alt="Hopsworks"
+              className="h-10"
+            />
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Book Raffle Draw</h1>
+          <p className="text-sm text-gray-500 mb-1">
+            Building Machine Learning Systems
+          </p>
           <p className="text-base text-gray-500">
             {participants.length} participant{participants.length !== 1 ? "s" : ""} registered
           </p>

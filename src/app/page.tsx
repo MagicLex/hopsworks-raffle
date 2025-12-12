@@ -48,16 +48,29 @@ export default function Home() {
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-              <rect width="36" height="36" rx="6" fill="#1eb182"/>
-              <path d="M10 18h16M18 10v16" stroke="white" strokeWidth="3" strokeLinecap="round"/>
-            </svg>
-            <span className="text-xl font-bold text-gray-900">Hopsworks</span>
+          <div className="mb-6">
+            <img
+              src="https://cdn.prod.website-files.com/5f6353590bb01cacbcecfbac/6202a13e7cafec5553703f6b_logo.svg"
+              alt="Hopsworks"
+              className="h-8"
+            />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Book Raffle</h1>
-          <p className="text-base text-gray-500">
-            Enter for a chance to win the O&apos;Reilly MLOps book
+
+          {/* Book Cover */}
+          <div className="mb-6">
+            <img
+              src="https://cdn.prod.website-files.com/5f6353590bb01cacbcecfbac/6913334f3a2eda409ff69e75_Book%20final%20visual.png"
+              alt="Building Machine Learning Systems"
+              className="w-full max-w-[280px] mx-auto rounded-sm shadow-md"
+            />
+          </div>
+
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Book Raffle</h1>
+          <p className="text-sm text-gray-500 mb-1">
+            Win a copy of <span className="font-semibold">Building Machine Learning Systems</span>
+          </p>
+          <p className="text-xs text-gray-400">
+            Batch, Real-Time, and LLM Systems — by Jim Dowling
           </p>
         </div>
 
