@@ -85,14 +85,14 @@ export default function DrawPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen flex flex-col items-center justify-center p-6 relative overflow-hidden">
       {/* Confetti */}
       {showConfetti && (
         <div className="fixed inset-0 pointer-events-none z-50">
           {Array.from({ length: 40 }).map((_, i) => (
             <div
               key={i}
-              className="confetti absolute w-2 h-2"
+              className="confetti absolute w-3 h-3"
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `-10px`,
@@ -106,39 +106,39 @@ export default function DrawPage() {
         </div>
       )}
 
-      <div className="w-full max-w-xl">
+      <div className="w-full max-w-2xl">
         {/* Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 mb-3">
-            <svg width="32" height="32" viewBox="0 0 28 28" fill="none">
-              <rect width="28" height="28" rx="4" fill="#1eb182"/>
-              <path d="M8 14h12M14 8v12" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
+        <div className="text-center mb-10">
+          <div className="inline-flex items-center gap-3 mb-4">
+            <svg width="40" height="40" viewBox="0 0 36 36" fill="none">
+              <rect width="36" height="36" rx="6" fill="#1eb182"/>
+              <path d="M10 18h16M18 10v16" stroke="white" strokeWidth="3" strokeLinecap="round"/>
             </svg>
-            <span className="text-xl font-bold text-black">Hopsworks</span>
+            <span className="text-2xl font-bold text-gray-900">Hopsworks</span>
           </div>
-          <h1 className="text-2xl font-bold text-black mb-1">Book Raffle Draw</h1>
-          <p className="text-sm text-gray">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Book Raffle Draw</h1>
+          <p className="text-base text-gray-500">
             {participants.length} participant{participants.length !== 1 ? "s" : ""} registered
           </p>
         </div>
 
         {/* Draw Display */}
-        <div className="bg-white rounded-sm border border-gray-lighter p-6 mb-6">
+        <div className="bg-white rounded-lg border border-gray-300 p-10 mb-8">
           {loading ? (
-            <div className="text-center text-sm text-gray py-8">Loading participants...</div>
+            <div className="text-center text-base text-gray-500 py-12">Loading participants...</div>
           ) : participants.length === 0 ? (
-            <div className="text-center text-sm text-gray py-8">No participants yet</div>
+            <div className="text-center text-base text-gray-500 py-12">No participants yet</div>
           ) : (
             <>
               {/* Number Display */}
               <div
-                className={`bg-gray-lightest rounded-sm p-8 mb-6 text-center transition-transform ${
-                  spinning ? "scale-[1.02]" : ""
-                } ${winner ? "winner-animation bg-primary-lightest" : ""}`}
+                className={`rounded-lg p-12 mb-8 text-center transition-all ${
+                  winner ? "winner-animation bg-primary-lightest" : "bg-gray-100"
+                } ${spinning ? "scale-[1.02]" : ""}`}
               >
                 <span
-                  className={`text-6xl font-mono font-bold transition-colors ${
-                    winner ? "text-primary" : "text-black"
+                  className={`text-7xl font-mono font-bold transition-colors ${
+                    winner ? "text-primary" : "text-gray-900"
                   }`}
                 >
                   {displayNumber !== null
@@ -149,18 +149,18 @@ export default function DrawPage() {
 
               {/* Winner Name */}
               {winner && (
-                <div className="text-center mb-6">
-                  <p className="text-sm font-bold text-primary mb-1">Winner</p>
-                  <p className="text-xl font-bold text-black">{winner.name}</p>
+                <div className="text-center mb-8">
+                  <p className="text-base font-bold text-primary mb-2">Winner</p>
+                  <p className="text-2xl font-bold text-gray-900">{winner.name}</p>
                 </div>
               )}
 
               {/* Actions */}
-              <div className="flex justify-center gap-3">
+              <div className="flex justify-center gap-4">
                 {!spinning && !winner && (
                   <button
                     onClick={startDraw}
-                    className="bg-primary text-white font-bold text-sm py-2 px-6 rounded-sm border border-primary hover:bg-primary-hover hover:border-primary-hover transition-all"
+                    className="bg-primary text-white font-bold text-base py-3 px-10 rounded-lg border border-primary hover:bg-primary-hover hover:border-primary-hover transition-all"
                   >
                     Start Draw
                   </button>
@@ -169,14 +169,14 @@ export default function DrawPage() {
                 {winner && (
                   <button
                     onClick={resetDraw}
-                    className="bg-white text-primary font-bold text-sm py-2 px-6 rounded-sm border border-primary hover:bg-primary-lightest transition-all"
+                    className="bg-white text-primary font-bold text-base py-3 px-10 rounded-lg border-2 border-primary hover:bg-primary-lightest transition-all"
                   >
                     Draw Again
                   </button>
                 )}
 
                 {spinning && (
-                  <span className="text-sm font-bold text-gray animate-pulse py-2">
+                  <span className="text-lg font-bold text-gray-500 animate-pulse py-3">
                     Drawing...
                   </span>
                 )}
@@ -186,22 +186,22 @@ export default function DrawPage() {
         </div>
 
         {/* Participants List */}
-        <div className="bg-white rounded-sm border border-gray-lighter">
-          <div className="px-5 py-3 border-b border-gray-lighter">
-            <h2 className="text-sm font-bold text-black">Participants</h2>
+        <div className="bg-white rounded-lg border border-gray-300 overflow-hidden">
+          <div className="px-6 py-4 border-b border-gray-200 bg-gray-100">
+            <h2 className="text-base font-bold text-gray-900">Participants</h2>
           </div>
-          <div className="p-5 max-h-48 overflow-y-auto">
+          <div className="p-6 max-h-64 overflow-y-auto">
             {participants.length === 0 ? (
-              <p className="text-sm text-gray">No participants yet</p>
+              <p className="text-base text-gray-500">No participants yet</p>
             ) : (
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {participants.map((p) => (
                   <div
                     key={p.number}
-                    className={`text-xs p-2 rounded-sm transition-colors ${
+                    className={`text-sm p-3 rounded-lg transition-colors ${
                       winner?.number === p.number
                         ? "bg-primary text-white font-bold"
-                        : "bg-gray-lightest text-black"
+                        : "bg-gray-100 text-gray-900"
                     }`}
                   >
                     <span className="font-mono">#{String(p.number).padStart(3, "0")}</span>{" "}
@@ -216,7 +216,7 @@ export default function DrawPage() {
         {/* Refresh */}
         <button
           onClick={fetchParticipants}
-          className="w-full mt-3 text-xs text-gray hover:text-primary transition-colors"
+          className="w-full mt-4 text-sm text-gray-500 hover:text-primary transition-colors py-2"
         >
           ↻ Refresh participants
         </button>
